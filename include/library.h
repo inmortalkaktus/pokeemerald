@@ -1,0 +1,5 @@
+#ifndef GUARD_LIBRARY_H
+#define GUARD_LIBRARY_H
+
+
+#endif // GUARD_LIBRARY_H

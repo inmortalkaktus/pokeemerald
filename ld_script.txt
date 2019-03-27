@@ -297,6 +297,7 @@ SECTIONS {
         src/unk_pokedex_area_screen_helper.o(.text);
         src/battle_pyramid_bag.o(.text);
         src/pokenav.o(.text);
+		src/library.o(.text);
         asm/pokenav.o(.text);
         src/pokenav_match_call.o(.text);
         src/menu_specialized.o(.text);
