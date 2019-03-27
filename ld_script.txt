@@ -613,6 +613,7 @@ SECTIONS {
         src/unk_pokedex_area_screen_helper.o(.rodata);
         src/battle_pyramid_bag.o(.rodata);
         src/pokenav.o(.rodata);
+		src/library.o(.rodata);
         data/pokenav.o(.rodata);
         src/pokenav_match_call.o(.rodata);
         src/menu_specialized.o(.rodata);
