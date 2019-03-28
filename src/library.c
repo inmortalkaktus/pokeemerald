@@ -5,19 +5,38 @@
 
 /*
 
-static const union AnimCmd nameSpriteAnimTable[] = ANIMCMD_EMPTY;
+_createEmptyAnim(AnimSprite);
 
 */
 
+u16 nombrePaleta[] = INCBIN_U16("graphics/library_test/bag.gbapal");
+u8 nombreSprite[] = INCBIN_U8("graphics/library_test/bag.4bpp");
+static EWRAM_DATA u8 iconNameEWRAM = 0;
+
+struct SpriteSheet bagSpriteSheet;
+struct SpritePalette bagSpritePalette;
+struct SpriteTemplate bagSpriteTemplate;
+
 void _drawSprite(void)
 {
-	//static const union AnimCmd nameSpriteAnimTable[] = ANIMCMD_EMPTY;
-	_createEmptyAnim(AnimSprite);
+	static const union AnimCmd bagAnimSpriteAnimCmd[] = ANIMCMD_EMPTY;
+	static const union AnimCmd *const bagAnimSprite[] = {bagAnimSpriteAnimCmd,};
+	
+	struct OamData bagOamData = _createSpriteOamData();
+	//_createEmptyAnim(bagAnimSprite);
+	_createSpriteData(bagSpriteSheet, bagSpritePalette, bagSpriteTemplate, nombreSprite, nombrePaleta, bagOamData, bagAnimSprite, 512, 12);
+}
+
+void _createSpriteData(struct SpriteSheet spriteSheet, struct SpritePalette spritePalette, struct SpriteTemplate spriteTemplate, u8 *spriteName, u16 *paletteName, struct OamData oamDataName, const union AnimCmd *const nameSpriteAnimTable[], u16 spriteSize, u16 spriteTag)
+{
+	spriteSheet = _createSpriteSheet(spriteName, spriteSize, spriteTag);
+	spritePalette = _createSpritePalette(paletteName, spriteTag);
+	spriteTemplate = _createSpriteTemplate(oamDataName, spriteTag, nameSpriteAnimTable);
 }
 
 struct OamData _createSpriteOamData(void)
 {
-	static const struct OamData spriteNameOamData =
+	struct OamData spriteNameOamData =
 	{
 		.y = 0,
 		.affineMode = 0,
@@ -35,69 +54,40 @@ struct OamData _createSpriteOamData(void)
 	};
 	return spriteNameOamData;
 }
-/*
-union AnimCmd[] _createEmptyAnim(void)
-{
-    union AnimCmd newSpriteAnimSeq0[] =
-    {
-        ANIMCMD_FRAME(0, 5),
-        ANIMCMD_END,
-    };
-    return newSpriteAnimSeq0;
-}
-*/
-/*
-struct SpriteSheet _createSpriteSheet(u8 *spriteName, u8 size, u8 tag)
+
+struct SpriteSheet _createSpriteSheet(u8 *spriteName, u16 spriteSize, u16 spriteTag)
 {
 	struct SpriteSheet spriteSheet =
 	{
 		.data = spriteName,
-		.size = size, //512 recommended
-		.tag = tag, //Este es lugar en que el sistema dibujará el sprite en la OAM
+		.size = spriteSize,
+		.tag = spriteTag,
 	};
+	return spriteSheet;
 }
 
-struct SpritePalette _createSpritePalette(u8 *paletteName, u8 tag2)
+
+struct SpritePalette _createSpritePalette(u16 *paletteName, u16 paletteTag)
 {
 	struct SpritePalette spritePalette =
 	{
 		.data = paletteName,
-		.tag = tag2, //Este es lugar en que el sistema dibujará el sprite en la OAM
+		.tag = paletteTag,
 	};
+	return spritePalette;
 }
 
-struct SpriteTemplate _createSpriteTemplate(u8 oamDataName, u8 tag3, union AnimCmd nameSpriteAnimTablee)
+struct SpriteTemplate _createSpriteTemplate(struct OamData oamDataName, u16 spritepaletteTileTag, const union AnimCmd *const nameSpriteAnimTable[])
 {
 	struct SpriteTemplate spriteTemplate =
 	{
-		.tileTag = tag3, //Este es lugar en que el sistema dibujará el sprite en la OAM
-		.paletteTag = tag3, //Este es lugar en que el sistema dibujará el sprite en la OAM
+		.tileTag = spritepaletteTileTag,
+		.paletteTag = spritepaletteTileTag,
 		.oam = &oamDataName,
-		.anims = nameSpriteAnimTablee,
-		.images = NULL, //Lo dejaremos siempre como NULL
-		.affineAnims = gDummySpriteAffineAnimTable, //Esto es para las animaciones afines, de nuevo, si no las usamos, dejaremos esto por defecto
-		.callback = SpriteCallbackDummy, //Esto es para las animaciones, si no las usaremos, también se quedará así
+		.anims = nameSpriteAnimTable,
+		.images = NULL,
+		.affineAnims = gDummySpriteAffineAnimTable,
+		.callback = SpriteCallbackDummy,
 	};
-}*/
-
-/*union AnimCmd _createEmptyAnim(void)
-{
-	static const union AnimCmd nameSpriteAnimSeq0[] =
-	{
-		ANIMCMD_FRAME(0, 5),
-		ANIMCMD_END,
-	};
-
-	static const union AnimCmd *const nameSpriteAnimTable = nameSpriteAnimSeq0;
-	return *nameSpriteAnimTable;
+	return spriteTemplate;
 }
-
-union AnimCmd _createEmptyAnim(void)
-{
-	union AnimCmd nameSpriteAnimSeq0[] =
-	{
-		ANIMCMD_FRAME(0, 5),
-		ANIMCMD_END,
-	};
-	return *nameSpriteAnimSeq0;
-}*/
