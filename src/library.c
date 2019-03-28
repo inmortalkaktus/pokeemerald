@@ -5,13 +5,14 @@
 
 /*
 
-
+static const union AnimCmd nameSpriteAnimTable[] = ANIMCMD_EMPTY;
 
 */
 
 void _drawSprite(void)
 {
-		
+	//static const union AnimCmd nameSpriteAnimTable[] = ANIMCMD_EMPTY;
+	_createEmptyAnim(AnimSprite);
 }
 
 struct OamData _createSpriteOamData(void)
@@ -34,8 +35,18 @@ struct OamData _createSpriteOamData(void)
 	};
 	return spriteNameOamData;
 }
-
-
+/*
+union AnimCmd[] _createEmptyAnim(void)
+{
+    union AnimCmd newSpriteAnimSeq0[] =
+    {
+        ANIMCMD_FRAME(0, 5),
+        ANIMCMD_END,
+    };
+    return newSpriteAnimSeq0;
+}
+*/
+/*
 struct SpriteSheet _createSpriteSheet(u8 *spriteName, u8 size, u8 tag)
 {
 	struct SpriteSheet spriteSheet =
@@ -67,7 +78,7 @@ struct SpriteTemplate _createSpriteTemplate(u8 oamDataName, u8 tag3, union AnimC
 		.affineAnims = gDummySpriteAffineAnimTable, //Esto es para las animaciones afines, de nuevo, si no las usamos, dejaremos esto por defecto
 		.callback = SpriteCallbackDummy, //Esto es para las animaciones, si no las usaremos, también se quedará así
 	};
-}
+}*/
 
 /*union AnimCmd _createEmptyAnim(void)
 {
