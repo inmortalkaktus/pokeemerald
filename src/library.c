@@ -24,7 +24,7 @@ void _drawSprite(void)
 	
 	struct OamData bagOamData = _createSpriteOamData();
 	//_createEmptyAnim(bagAnimSprite);
-	_createSpriteData(bagSpriteSheet, bagSpritePalette, bagSpriteTemplate, nombreSprite, nombrePaleta, bagOamData, bagAnimSprite, 512, 12);
+	//_createSpriteData(bagSpriteSheet, bagSpritePalette, bagSpriteTemplate, nombreSprite, nombrePaleta, bagOamData, bagAnimSprite, 512, 12);
 }
 
 void _createSpriteData(struct SpriteSheet spriteSheet, struct SpritePalette spritePalette, struct SpriteTemplate spriteTemplate, u8 *spriteName, u16 *paletteName, struct OamData oamDataName, const union AnimCmd *const nameSpriteAnimTable[], u16 spriteSize, u16 spriteTag)
